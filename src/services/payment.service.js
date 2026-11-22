@@ -4,7 +4,7 @@ const { formatNaira } = require("../config/menu");
 
 function createPaymentService({ paystack, orderService, appUrl }) {
     function guestEmail(deviceId) {
-      return `guest-${deviceId.slice(0, 8)}@guests.restaurant-chatbot.test`;
+      return `guest-${deviceId.slice(0, 8)}@example.com`;
     }
 
     async function startPayment(order) {

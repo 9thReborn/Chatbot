@@ -93,6 +93,20 @@ describe("payment service", () => {
     });
     expect(order.paymentStatus).toBe("unpaid");
   });
+    
+    test("the guest email uses a real top-level domain (Paystack rejects .test, .local, etc.)", async () => {
+      const orderService = createFakeOrderService();
+      const paystack = createFakePaystack();
+      const payments = createPaymentService({
+        paystack,
+        orderService,
+        appUrl: "https://food.example",
+      });
+      await payments.startPayment(await placedOrder(orderService));
+
+      const { email } = paystack.calls.initialize[0];
+      expect(email).toMatch(/^[^@\s]+@[^@\s]+\.(com|ng|org|net)$/);
+    });
 });
 
 describe("Paystack webhook signature", () => {
