@@ -60,7 +60,10 @@ function createPaymentController(paymentService) {
       }
 
       // Acknowledge quickly; Paystack retries webhooks that don't get a fast 200.
-      res.sendStatus(200);
+        res.sendStatus(200);
+        console.log(
+          `[payments] webhook received: ${event.event} ${event.data?.reference ?? ""}`,
+        );
 
       if (
         event.event === "charge.success" &&
